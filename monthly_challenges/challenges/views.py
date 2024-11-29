@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
 from django.urls import reverse
+from django.template.loader import render_to_string
 
 monthly_challenges_dic = {
     "january":"Learn",
@@ -40,7 +41,7 @@ def monthly_challenges_int(request,month):
 def monthly_challenges(request,month):
     try:
         challenge_text = monthly_challenges_dic[month]
-        response_data = f"<h1>{challenge_text}</h1>"
+        response_data = render_to_string("challenges/challenge.html")
         return HttpResponse(response_data)
     except KeyError:
         return HttpResponseNotFound("<h1>Believe Man, God Bless Your Soul</h1>")
