@@ -1,0 +1,7 @@
+{% extends "base.html" %} {% block content %}
+<ul>
+  {% for month in months_list %}
+  <li><a href="{% url 'month-challenge' month%}">{{month|title}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %} {% block page_title %} Month list {% endblock %}

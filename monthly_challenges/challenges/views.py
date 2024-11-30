@@ -15,17 +15,15 @@ monthly_challenges_dic = {
     "september": "Stay Humble", 
     "october":"He didnot abandon you",
     "november":"Sacrifice the evil in your heart",
-    "december":"Kill Lust",
+    "december":None,
                       }
 
 # Create your views here.
 def index(request):
-    list_items =''
     month_key =list(monthly_challenges_dic.keys())
-    for month in month_key:
-        month_url =reverse("month-challenge",args=[month])
-        list_items+=f'<li><a href="{month_url}">{month}</a></li>'
-    return HttpResponse(f"<ul>{list_items}</ul>")
+    return render (request,"challenges/index.html",{
+        "months_list":month_key
+    })
 
 
 def monthly_challenges_int(request,month):
@@ -41,7 +39,10 @@ def monthly_challenges_int(request,month):
 def monthly_challenges(request,month):
     try:
         challenge_text = monthly_challenges_dic[month]
-        response_data = render_to_string("challenges/challenge.html")
-        return HttpResponse(response_data)
+        return render(request,"challenges/challenge.html",{
+            "text":challenge_text,
+            "month":month,
+        })
+
     except KeyError:
         return HttpResponseNotFound("<h1>Believe Man, God Bless Your Soul</h1>")
